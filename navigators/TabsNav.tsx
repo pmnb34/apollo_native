@@ -12,7 +12,6 @@ const Tabs = createBottomTabNavigator();
 
 function TabsNav() {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
-  console.log(isLoggedIn);
   return (
     <Tabs.Navigator
       screenOptions={{

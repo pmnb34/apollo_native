@@ -1,5 +1,5 @@
 import * as SplashScreen from "expo-splash-screen";
-import { ApolloProvider } from "@apollo/client";
+import { ApolloProvider, useReactiveVar } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import client from "./apollo";
 import { Ionicons } from "@expo/vector-icons";
@@ -8,19 +8,19 @@ import { Asset } from "expo-asset";
 import { NavigationContainer } from "@react-navigation/native";
 import StackNav from "./navigators/StackNav";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { isLoggedInVar, tokenVar } from "./store";
-
+import { isLoggedInVar, themeVar, tokenVar } from "./store";
+import { ThemeProvider } from "styled-components";
+import Toast from "react-native-toast-message";
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
+  const theme = useReactiveVar(themeVar);
   const [loading, setLoading] = useState(true);
   const onFinish = () => setLoading(false);
-
   useEffect(() => {
     const preloadAssets = async () => {
       try {
         const token = await AsyncStorage.getItem("token");
-        console.log(token);
         if (token) {
           isLoggedInVar(true);
           tokenVar(token);
@@ -31,7 +31,6 @@ export default function App() {
         const imagePromises = imagesToLoad.map((image) => Asset.loadAsync(image));
         Promise.all([...fontPromises, ...imagePromises]);
       } catch (e) {
-        console.log(e);
       } finally {
         onFinish();
         await SplashScreen.hideAsync();
@@ -43,11 +42,15 @@ export default function App() {
   if (loading) {
     return null;
   }
+
   return (
     <ApolloProvider client={client}>
-      <NavigationContainer>
-        <StackNav />
-      </NavigationContainer>
+      <ThemeProvider theme={theme}>
+        <NavigationContainer>
+          <StackNav />
+        </NavigationContainer>
+        <Toast />
+      </ThemeProvider>
     </ApolloProvider>
   );
 }

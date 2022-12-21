@@ -20,14 +20,11 @@ const Stack = createStackNavigator();
 
 function WriteStack() {
   const writeData = useReactiveVar(feedWritePayloadVar);
-  console.log(writeData);
 
   const onCompleted = (data) => {
-    console.log(data);
     const {
       createFeed: { success },
     } = data;
-    console.log(success);
   };
   const [writebtn, { data, loading, error }] = useMutation(CREATEFEED_MUTATION, {
     onCompleted,

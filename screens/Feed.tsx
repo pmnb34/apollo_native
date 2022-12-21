@@ -15,20 +15,20 @@ const ALLFEED_QUERY = gql`
     }
   }
 `;
-function Feed({ navigation }) {
+function Feed({ navigation }: any) {
   const { data, loading, refetch, fetchMore } = useQuery(ALLFEED_QUERY, {
     variables: {
       offset: 0,
     },
   });
-  const Item = (item) => (
+  const Item = (item: any) => (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text style={{ color: "red" }} onPress={() => navigation.navigate("FeedDetail", { feedId: item.id })}>
         {item.body}
       </Text>
     </View>
   );
-  const renderItem = ({ item }) => <Item {...item} />;
+  const renderItem = ({ item }: any) => <Item {...item} />;
 
   if (loading) {
     return (

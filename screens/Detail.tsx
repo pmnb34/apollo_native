@@ -17,7 +17,6 @@ function Detail({ route }) {
       feedId: route?.params?.feedId,
     },
   });
-  console.log(data);
   if (loading) {
     return (
       <View

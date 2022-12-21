@@ -2,6 +2,6 @@ module.exports = function (api) {
   api.cache(true);
   return {
     presets: ["babel-preset-expo"],
-    plugins: ["react-native-reanimated/plugin", ["styled-components", { ssr: true }]],
+    plugins: [["styled-components", { ssr: true }], "react-native-reanimated/plugin"],
   };
 };
