@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Detail from "../../screens/Detail";
 import Profile from "../../screens/Profile";
 import { Button } from "react-native";
+import ProfileDetail from "../../screens/ProfileDetail";
 
 const Stack = createStackNavigator();
 
@@ -21,7 +22,7 @@ function ProfileStack() {
       <Stack.Screen
         name="ProfileDetail"
         options={{ headerTitle: "프로필 피드 디테일", headerBackTitleVisible: false }}
-        component={Detail}
+        component={ProfileDetail}
       />
     </Stack.Navigator>
   );

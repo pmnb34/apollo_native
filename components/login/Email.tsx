@@ -39,7 +39,7 @@ function Email({ navigation }) {
       login: { success, token },
     } = data;
     if (success) {
-      await isLoggedInFn(token);
+      await isLoggedInFn(token, "email");
     }
   };
   const [loginMutation, { loading }] = useMutation(LOGIN_MUTATION, { onCompleted });
