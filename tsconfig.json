@@ -9,7 +9,8 @@
     "module": "CommonJS",
     "moduleResolution": "node",
     "esModuleInterop": true,
+    "strictNullChecks": false,
     "jsx": "react-native"
   },
-  "include": ["./src/**/*", "navigators"]
+  "include": ["./src/**/*", "navigators", "App.tsx"]
 }

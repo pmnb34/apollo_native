@@ -1,17 +1,17 @@
 import * as SplashScreen from "expo-splash-screen";
 import { ApolloProvider, useReactiveVar } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import client, { getAccToken } from "./apollo";
+import client, { getAccToken } from "./src/apollo";
 import { Ionicons } from "@expo/vector-icons";
 import * as Font from "expo-font";
 import { Asset } from "expo-asset";
 import { NavigationContainer } from "@react-navigation/native";
-import StackNav from "./navigators/StackNav";
+import StackNav from "./src/navigators/StackNav";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { isLoggedInVar, themeVar, userIdVar, tokenVar, tokenTimeVar, tokenMethodVar } from "./store";
+import { isLoggedInVar, themeVar, userIdVar, tokenVar, tokenTimeVar, tokenMethodVar } from "./src/store";
 import { ThemeProvider } from "styled-components";
 import Toast from "react-native-toast-message";
-import { USERID, TOKEN, TOKEN_TIME, TOKEN_METHOD } from "./enum";
+import { USERID, TOKEN, TOKEN_TIME, TOKEN_METHOD } from "./src/enum";
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
@@ -21,10 +21,10 @@ export default function App() {
   useEffect(() => {
     const preloadAssets = async () => {
       try {
-        const userId = await AsyncStorage.getItem(USERID);
-        const token = await AsyncStorage.getItem(TOKEN);
-        const token_time = await AsyncStorage.getItem(TOKEN_TIME);
-        const token_method = await AsyncStorage.getItem(TOKEN_METHOD);
+        const userId = (await AsyncStorage.getItem(USERID)) || null;
+        const token = (await AsyncStorage.getItem(TOKEN)) || null;
+        const token_time = (await AsyncStorage.getItem(TOKEN_TIME)) || null;
+        const token_method = (await AsyncStorage.getItem(TOKEN_METHOD)) || null;
         console.log(userId, token, token_time, token_method);
         if (userId && token && token_time && token_method) {
           isLoggedInVar(true);
