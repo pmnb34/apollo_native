@@ -2,7 +2,7 @@ import { ApolloClient, InMemoryCache, createHttpLink, gql } from "@apollo/client
 import { setContext } from "@apollo/client/link/context";
 import { setTokenTime } from "./enum";
 import { removeToken, setToken, userIdVar, tokenMethodVar, tokenVar } from "./store";
-
+import { onError } from "@apollo/client/link/error";
 const authLink = setContext((_, { headers }) => {
   return {
     headers: {
@@ -13,11 +13,20 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 const httpLink = createHttpLink({
-  uri: "http://localhost:4000",
+  uri: "http://localhost:4000/",
 });
 
-const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+const onErrorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) {
+    console.log(`GraphQL Error`, graphQLErrors);
+  }
+  if (networkError) {
+    console.log("Network Error", networkError);
+  }
+});
+
+export const client = new ApolloClient({
+  link: authLink.concat(onErrorLink).concat(httpLink),
   cache: new InMemoryCache(),
 });
 
@@ -72,7 +81,7 @@ const TOKEN_INTERVAL = {
 let getAccTokenInterval = () => {
   TOKEN_INTERVAL.fn = setInterval(async () => {
     await mutation();
-  }, 9000);
+  }, 9000000);
 };
 let stopGetAccTokenInterval = () => {
   clearInterval(TOKEN_INTERVAL.fn as any);

@@ -14,16 +14,19 @@ export default function DismissKeyboard({ children }: any) {
     Keyboard.dismiss();
   };
   return (
-    <TouchableWithoutFeedback onPress={dismissKeyboard} disabled={Platform.OS === "web"}>
-      <KeyboardAvoidingView
-        style={{
-          width: "100%",
-        }}
-        behavior="position"
-        keyboardVerticalOffset={Platform.OS === "ios" ? 50 : 0}
-      >
-        {children}
-      </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
+    <SafeAreaView style={{ flex: 1 }}>
+      <TouchableWithoutFeedback onPress={dismissKeyboard} disabled={Platform.OS === "web"} style={{ flex: 1 }}>
+        <KeyboardAvoidingView
+          style={{
+            width: "100%",
+            flex: 1,
+          }}
+          behavior="padding"
+          keyboardVerticalOffset={Platform.OS === "ios" ? 110 : 0}
+        >
+          {children}
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
+    </SafeAreaView>
   );
 }

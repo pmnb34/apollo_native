@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useCallback } from "react";
 import { gql, OperationVariables, useMutation } from "@apollo/client";
-import { Text, View, TextInput, Button, Alert, TouchableOpacity, ActivityIndicator } from "react-native";
+import { Text, View, ScrollView, TextInput, Button, Alert, TouchableOpacity, ActivityIndicator } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { BottomSheetTextInput, useBottomSheetModal } from "@gorhom/bottom-sheet";
 import styled from "styled-components";
@@ -20,7 +20,7 @@ const CREATEACCOUNT_MUTATION = gql`
     }
   }
 `;
-function Register(props:any) {
+function Register(props: any) {
   const { dismiss, dismissAll } = useBottomSheetModal();
   const {
     control,
@@ -37,9 +37,11 @@ function Register(props:any) {
       username: "",
     },
   });
-  const onCompleted = async (data: { createAccount: { success: any; message: any;id: any; token: any; tokenTime: any; }; }) => {
+  const onCompleted = async (data: {
+    createAccount: { success: any; message: any; id: any; token: any; tokenTime: any };
+  }) => {
     const {
-      createAccount: { success, message , id, token, tokenTime},
+      createAccount: { success, message, id, token, tokenTime },
     } = data;
     if (success) {
       await isLoggedInFn(id, token, setTokenTime(tokenTime), "email");
@@ -48,7 +50,7 @@ function Register(props:any) {
         topOffset: 80,
         text1: message,
       });
-      dismiss()
+      dismiss();
     }
   };
   const [loginMutation, { loading }] = useMutation(CREATEACCOUNT_MUTATION, { onCompleted });
@@ -210,9 +212,9 @@ function Register(props:any) {
 
 export default Register;
 
-const Container = styled(View)`
-  align-items: center;
-  justify-content: center;
+const Container = styled(ScrollView)`
+  /* align-items: center; */
+  /* justify-content: center; */
   padding: 20px 20px;
 `;
 const InputTitleRow = styled(View)`
@@ -259,6 +261,7 @@ const Btn = styled(TouchableOpacity)`
   opacity: ${({ disabled }) => (disabled ? "0.5" : "1")};
   margin-top: 10px;
   border-radius: 50px;
+  margin-bottom: 50px;
 `;
 const BtnText = styled(Text)`
   text-align: center;

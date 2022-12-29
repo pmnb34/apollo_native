@@ -6,10 +6,11 @@ import { gql, useMutation } from "@apollo/client";
 import { feedWritePayloadVar } from "../../store";
 import Write from "../../screens/Write";
 import { useReactiveVar } from "@apollo/client";
+import { ReactNativeFile } from "apollo-upload-client";
 
 const CREATEFEED_MUTATION = gql`
-  mutation CreateFeed($body: String!, $isPrivate: Boolean!, $tags: [String], $images: [String]) {
-    createFeed(body: $body, isPrivate: $isPrivate, tags: $tags, images: $images) {
+  mutation CreateFeed($file: Upload!) {
+    createFeed(file: $file) {
       message
       success
     }
@@ -20,16 +21,26 @@ const Stack = createStackNavigator();
 
 function WriteStack() {
   const writeData = useReactiveVar(feedWritePayloadVar);
-  console.log(writeData);
   const onCompleted = (data) => {
     console.log(data);
-    const {
-      createFeed: { success },
-    } = data;
   };
   const [writebtn, { data, loading, error }] = useMutation(CREATEFEED_MUTATION, {
     onCompleted,
   });
+
+  const onValid = () => {
+    const { file } = new ReactNativeFile({
+      uri: writeData?.uri,
+      name: writeData?.name,
+      type: writeData?.type,
+    });
+    console.log(file);
+    writebtn({
+      variables: {
+        file,
+      },
+    });
+  };
 
   return (
     <Stack.Navigator>
@@ -38,24 +49,7 @@ function WriteStack() {
         options={{
           headerTitle: "작성하기",
           headerBackTitleVisible: false,
-          headerRight: () => (
-            <Button
-              onPress={() =>
-                writeData
-                  ? writebtn({
-                      variables: {
-                        body: writeData.body,
-                        tags: writeData.tags,
-                        images: writeData.images,
-                        isPrivate: true,
-                      },
-                    })
-                  : null
-              }
-              title="업로드"
-              color="red"
-            />
-          ),
+          headerRight: () => <Button onPress={() => (writeData ? onValid() : null)} title="업로드" color="red" />,
         }}
         component={Write}
       />
