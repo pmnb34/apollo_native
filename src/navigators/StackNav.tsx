@@ -12,12 +12,18 @@ function StackNav() {
       initialRouteName="Tabs"
       screenOptions={{
         headerShown: false,
-        presentation: "modal",
+        // presentation: "modal",
       }}
     >
       <Stack.Screen name="Tabs" component={TabsNav} />
       <Stack.Screen name="Write" component={WriteStack} />
-      <Stack.Screen name="Menu" component={MenuStack} />
+      <Stack.Screen
+        name="Menu"
+        options={{
+          presentation: "modal",
+        }}
+        component={MenuStack}
+      />
     </Stack.Navigator>
   );
 }

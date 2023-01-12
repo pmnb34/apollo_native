@@ -12,6 +12,7 @@ import { isLoggedInVar, themeVar, userIdVar, tokenVar, tokenTimeVar, tokenMethod
 import { ThemeProvider } from "styled-components";
 import Toast from "react-native-toast-message";
 import { USERID, TOKEN, TOKEN_TIME, TOKEN_METHOD } from "./src/enum";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
@@ -32,7 +33,7 @@ export default function App() {
           tokenVar(token);
           tokenTimeVar(token_time);
           tokenMethodVar(token_method);
-          getAccToken(userId, token, token_time, token_method);
+          getAccToken(token_time);
         }
         const fontsToLoad = [Ionicons.font];
         const fontPromises = fontsToLoad.map((font) => Font.loadAsync(font));
@@ -55,10 +56,12 @@ export default function App() {
   return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
-        <NavigationContainer>
-          <StackNav />
-        </NavigationContainer>
-        <Toast />
+        <BottomSheetModalProvider>
+          <NavigationContainer>
+            <StackNav />
+          </NavigationContainer>
+          <Toast />
+        </BottomSheetModalProvider>
       </ThemeProvider>
     </ApolloProvider>
   );

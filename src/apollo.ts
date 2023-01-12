@@ -58,9 +58,12 @@ const mutation = async () => {
       .then(
         ({
           data: {
-            refreshToken: { success, id, token, tokenTime, method },
+            refreshToken: { success, message, id, token, tokenTime, method },
           },
         }) => {
+          console.log(
+            success + "  -  " + message + "  -  " + id + "  -  " + token + "  -  " + tokenTime + "  -  " + method
+          );
           if (success) {
             setToken(id, token, setTokenTime(tokenTime) as any, method);
           } else {
@@ -90,6 +93,9 @@ let stopGetAccTokenInterval = () => {
 export const getAccToken = async (tokenTime: string) => {
   const nowTime = Math.ceil(Date.now() / 1000);
   const gap = Number(tokenTime) - Number(nowTime);
+  // const gap = Number(1672677960) - Number(nowTime);
+  console.log(nowTime);
+  console.log(gap);
   if (gap < 10800) {
     // 3시간 (10800 s) 기준 으로 2.5시간(9000000 ms) setInerval 설정
     mutation();
