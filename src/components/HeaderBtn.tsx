@@ -11,7 +11,6 @@ const Btn = styled(TouchableOpacity)`
   align-items: center;
   justify-content: center;
 `;
-useNavigation;
 export default function HeaderBtn() {
   const navigation = useNavigation();
   return (
@@ -21,14 +20,14 @@ export default function HeaderBtn() {
           navigation.navigate("Write");
         }}
       >
-        <Feather name="plus-square" size={24} color="black" />
+        <Feather name="plus-circle" size={24} color="48464c" />
       </Btn>
       <Btn
         onPress={() => {
           navigation.navigate("Menu");
         }}
       >
-        <Feather name="menu" size={24} color="black" />
+        <Feather name="menu" size={24} color="48464c" />
       </Btn>
     </Container>
   );

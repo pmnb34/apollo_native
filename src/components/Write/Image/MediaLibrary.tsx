@@ -6,15 +6,20 @@ import ImageContainer from "./Image";
 import IconContainer from "./Icon";
 
 function MediaLibraryContainer() {
-  const [mediaLibrary, setMediaLibrary] = useState([]);
+  const [page, setPage] = useState(0);
+  const [lastItemID, setlastItemID] = useState(undefined);
 
+  const [mediaLibrary, setMediaLibrary] = useState([]);
   const getMediaLibrary = async () => {
-    const { assets: images } = await MediaLibrary.getAssetsAsync({
-      first: 10,
+    const pageSize = 100;
+    const { endCursor, assets: images } = await MediaLibrary.getAssetsAsync({
+      after: lastItemID,
+      first: pageSize,
       sortBy: ["creationTime"],
       mediaType: [MediaLibrary.MediaType.photo, MediaLibrary.MediaType.video],
     });
-    setMediaLibrary(images);
+    setlastItemID(endCursor);
+    setMediaLibrary((oldArray) => [...oldArray, ...images]);
   };
 
   const getPermissions = async () => {
@@ -39,7 +44,17 @@ function MediaLibraryContainer() {
     </View>
   );
 
-  return <FlatList data={mediaLibrary} numColumns={3} keyExtractor={(image) => image.id} renderItem={renderItem} />;
+  return (
+    <FlatList
+      data={mediaLibrary}
+      numColumns={3}
+      keyExtractor={(image) => image.id}
+      disableVirtualization={true}
+      renderItem={renderItem}
+      onEndReached={getMediaLibrary}
+      onEndReachedThreshold={3}
+    />
+  );
 }
 
 export default MediaLibraryContainer;

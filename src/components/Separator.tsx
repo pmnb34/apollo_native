@@ -13,5 +13,5 @@ function SparatorContainer() {
 export default SparatorContainer;
 
 const Sparator = styled(View)`
-  border: 0.5px solid #e9e9e9;
+  border: 0.5px solid #eaeaec;
 `;

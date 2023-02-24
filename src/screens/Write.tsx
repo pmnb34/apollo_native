@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, ScrollView } from "react-native";
 import styled from "styled-components";
 import DismissKeyboard from "../components/DismissKeyboard";
-import { gql } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import AuthorContainer from "../components/Write/Author";
 import SparatorContainer from "../components/Separator";
 import TextareaContainer from "../components/Write/Textarea";
@@ -13,14 +13,14 @@ import OptionContainer from "../components/Write/Options";
 import { useReactiveVar } from "@apollo/client";
 import { writeHashTags, writeMentions } from "../components/Write/WriteStore";
 
-const CREATEFEED_MUTATION = gql`
-  mutation CreateFeed($body: String!, $images: [Images], $tags: [String], $location: Location) {
-    createFeed(body: $body, images: $images, tags: $tags, location: $location) {
-      message
-      success
-    }
-  }
-`;
+// const CREATEFEED_MUTATION = gql`
+//   mutation CreateFeed($body: String!, $images: [Images], $tags: [String], $location: Location) {
+//     createFeed(body: $body, images: $images, tags: $tags, location: $location) {
+//       message
+//       success
+//     }
+//   }
+// `;
 function Write() {
   const tags = useReactiveVar(writeHashTags);
   const mentions = useReactiveVar(writeMentions);

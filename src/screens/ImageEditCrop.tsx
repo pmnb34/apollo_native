@@ -23,6 +23,7 @@ function ImageEditCrop({ route }) {
   const navigation = useNavigation();
   const { width, height } = useWindowDimensions();
   const preSelectImage = useReactiveVar(writeImagesPrev);
+  console.log(preSelectImage);
   const fileWidth = route.params.file.width;
   const fileHeight = route.params.file.height;
   useEffect(() => {

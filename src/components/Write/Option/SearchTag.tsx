@@ -11,7 +11,7 @@ import { selectTagMentionBySheet } from "../Hooks/selectTagMentionBySheet";
 
 function SearchTagContainer() {
   const { dismiss } = useBottomSheetModal();
-  const focusTag = useReactiveVarr(writeFocusTag);
+  const focusTag = useReactiveVar(writeFocusTag);
   const focusPosition = useReactiveVar(writeFocusPosition);
   const Body = useReactiveVar(writeBody);
 

@@ -6,11 +6,11 @@ import styled from "styled-components";
 import { useReactiveVar } from "@apollo/client";
 
 import { imageDelete, selectImage } from "./Hooks/selectImages";
+import { useNavigation } from "@react-navigation/native";
 
 function ImageContainer() {
+  const navigation = useNavigation();
   const images = useReactiveVar(writeImages);
-  console.log("images");
-  console.log(images);
   return (
     <TouchableWithoutFeedback>
       <ScrollView horizontal showsHorizontalScrollIndicator={true} contentContainerStyle={{ flexGrow: 1 }}>
@@ -28,7 +28,7 @@ function ImageContainer() {
                 </ImagesBox>
               ))
             ) : (
-              <TouchableOpacity onPress={selectImage}>
+              <TouchableOpacity onPress={() => navigation.navigate("ImageList")}>
                 <Feather name="plus" size={24} color="black" />
               </TouchableOpacity>
             )}
